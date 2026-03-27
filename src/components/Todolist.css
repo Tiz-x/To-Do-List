@@ -1,0 +1,146 @@
+.todos {
+  list-style: none;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.todos:empty {
+  display: none;
+}
+
+/* Divider between items */
+.todos__single + .todos__single {
+  border-top: 1px solid var(--line);
+}
+
+.todos__single {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--surface);
+  transition: background 0.15s ease;
+  cursor: default;
+}
+
+.todos__single:hover {
+  background: var(--paper);
+}
+
+/* Checkbox circle */
+.todo__check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo__check:hover {
+  border-color: var(--accent);
+}
+
+.todo__check.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.todo__check.checked::after {
+  content: '';
+  width: 6px;
+  height: 4px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+
+/* Text */
+.todos__single__text {
+  flex: 1;
+  font-size: 15px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+.todos__single__text.done {
+  text-decoration: line-through;
+  color: var(--ink-muted);
+}
+
+.todos__single__input {
+  flex: 1;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper-dark);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 10px;
+  outline: none;
+}
+
+.todos__single__input:focus {
+  border-color: var(--accent);
+}
+
+/* Action icons */
+.icons {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.todos__single:hover .icons {
+  opacity: 1;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--ink-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.icon:hover {
+  background: var(--paper-dark);
+  color: var(--ink);
+}
+
+.icon.delete:hover {
+  background: #fdecea;
+  color: var(--accent);
+}
+
+/* Count bar at bottom */
+.todos__footer {
+  padding: 10px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--paper);
+}

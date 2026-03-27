@@ -1,0 +1,58 @@
+.input {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  gap: 0;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.05);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.input:focus-within {
+  box-shadow: var(--shadow-lg), 0 0 0 2px var(--accent);
+}
+
+.input__box {
+  flex: 1;
+  padding: 18px 22px;
+  font-size: 16px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  letter-spacing: 0.01em;
+}
+
+.input__box::placeholder {
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.submit__btn {
+  padding: 14px 24px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.submit__btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.submit__btn:active {
+  background: #a93226;
+}
