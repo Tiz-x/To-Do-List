@@ -1,26 +1,39 @@
-.input {
+.input__wrap {
   width: 100%;
-  max-width: 600px;
+  max-width: 580px;
+}
+
+.input {
   display: flex;
-  gap: 0;
-  background: var(--surface);
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.05);
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  transition: box-shadow 0.2s ease;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input:focus-within {
-  box-shadow: var(--shadow-lg), 0 0 0 2px var(--accent);
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.input__icon {
+  padding: 0 0 0 20px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .input__box {
   flex: 1;
-  padding: 18px 22px;
-  font-size: 16px;
-  font-family: var(--font-body);
+  min-width: 0;
+  padding: 17px 14px;
+  font-size: clamp(14px, 3.5vw, 15px);
+  font-family: var(--font-sans);
   font-weight: 400;
-  color: var(--ink);
+  color: var(--text);
   background: transparent;
   border: none;
   outline: none;
@@ -28,31 +41,37 @@
 }
 
 .input__box::placeholder {
-  color: var(--ink-muted);
-  font-style: italic;
+  color: var(--text-dim);
 }
 
 .submit__btn {
-  padding: 14px 24px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  margin: 6px;
+  padding: 11px 20px;
+  background: var(--gold);
+  color: #0d0f14;
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 3vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
   border: none;
+  border-radius: calc(var(--radius-xl) - 6px);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s, transform 0.1s;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.submit__btn:hover {
-  background: var(--accent);
-  color: #fff;
+.submit__btn:hover { background: #f0c87a; }
+.submit__btn:active { transform: scale(0.96); }
+
+@media (max-width: 480px) {
+  .input__icon { padding-left: 14px; }
+  .input__box  { padding: 14px 10px; }
+  .submit__btn { padding: 10px 16px; margin: 5px; }
 }
 
-.submit__btn:active {
-  background: #a93226;
+@media (max-width: 360px) {
+  .input__icon { display: none; }
+  .input__box  { padding: 14px 16px; }
+  .submit__btn { padding: 10px 12px; }
 }

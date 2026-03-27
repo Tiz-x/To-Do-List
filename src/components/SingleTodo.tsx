@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import type { Todo } from "./Model";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteForever } from "react-icons/md";
-import { FiCheck } from "react-icons/fi";
-import "./Todolist.css";
+import React, { useState } from 'react';
+import type { Todo } from './Model';
+import { CiEdit } from 'react-icons/ci';
+import { MdDeleteForever } from 'react-icons/md';
+import { FiCheck } from 'react-icons/fi';
+import './Todolist.css';
 
 type Props = {
   todo: Todo;
@@ -31,11 +31,7 @@ const SingleTodo = ({ todo, todos, setTodos }: Props) => {
   };
 
   return (
-    <li
-      className="todos__single"
-      onKeyDown={(e) => e.key === 'Enter' && edit && handleEditSave(todo.id)}
-    >
-      {/* Checkbox */}
+    <li className={`todos__single ${todo.isDone ? 'is-done' : ''}`}>
       <span
         className={`todo__check ${todo.isDone ? 'checked' : ''}`}
         onClick={() => handleDone(todo.id)}
@@ -43,9 +39,12 @@ const SingleTodo = ({ todo, todos, setTodos }: Props) => {
         aria-checked={todo.isDone}
         tabIndex={0}
         onKeyDown={(e) => e.key === ' ' && handleDone(todo.id)}
-      />
+      >
+        <svg viewBox="0 0 12 12">
+          <polyline points="1.5,6 4.5,9.5 10.5,2.5" />
+        </svg>
+      </span>
 
-      {/* Text or edit input */}
       {edit ? (
         <input
           value={editTodo}
@@ -53,6 +52,7 @@ const SingleTodo = ({ todo, todos, setTodos }: Props) => {
           className="todos__single__input"
           autoFocus
           onBlur={() => handleEditSave(todo.id)}
+          onKeyDown={(e) => e.key === 'Enter' && handleEditSave(todo.id)}
         />
       ) : (
         <span className={`todos__single__text ${todo.isDone ? 'done' : ''}`}>
@@ -60,11 +60,10 @@ const SingleTodo = ({ todo, todos, setTodos }: Props) => {
         </span>
       )}
 
-      {/* Action icons */}
       <div className="icons">
         {edit ? (
           <span className="icon" onClick={() => handleEditSave(todo.id)}>
-            <FiCheck size={16} />
+            <FiCheck size={15} />
           </span>
         ) : (
           <span className="icon" onClick={() => setEdit(true)}>

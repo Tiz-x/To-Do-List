@@ -17,16 +17,23 @@ const InputField = ({ todo, setTodo, todos, setTodos }: Props) => {
   };
 
   return (
-    <form className="input" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={todo}
-        onChange={(e) => setTodo(e.target.value)}
-        placeholder="What needs to be done?"
-        className="input__box"
-      />
-      <button className="submit__btn" type="submit">Add task</button>
-    </form>
+    <div className="input__wrap">
+      <form className="input" onSubmit={handleSubmit}>
+        <span className="input__icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </span>
+        <input
+          type="text"
+          value={todo}
+          onChange={(e) => setTodo(e.target.value)}
+          placeholder="Add a new task..."
+          className="input__box"
+        />
+        <button className="submit__btn" type="submit">+ Add</button>
+      </form>
+    </div>
   );
 };
 

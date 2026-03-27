@@ -1,7 +1,6 @@
 import './Taskify.css';
 import InputField from './InputField';
 import type { Todo } from './Model';
-import React from 'react';   // add this if missing
 
 interface Props {
   todo: string;
@@ -13,10 +12,15 @@ interface Props {
 const Taskify = ({ todo, setTodo, todos, setTodos }: Props) => {
   return (
     <div className="taskify">
-      <div className="taskify__header">
+      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+        <div className="taskify__badge">
+          <span className="taskify__badge__dot" />
+          Personal workspace
+        </div>
         <h1 className="taskify__title">
-          Do <em>&</em> Done
+          Make it <span>done.</span>
         </h1>
+        <p className="taskify__sub">Capture tasks. Stay focused. Ship things.</p>
       </div>
       <InputField
         todo={todo}

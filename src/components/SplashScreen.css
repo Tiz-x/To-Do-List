@@ -1,0 +1,92 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+
+.splash--exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.splash__line {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 6vw, 46px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text-dim);
+  letter-spacing: -0.01em;
+  min-height: 1.2em;
+  transition: color 0.4s ease;
+}
+
+.splash__line--active {
+  color: var(--text);
+}
+
+.splash__line--done {
+  color: var(--text-md);
+}
+
+/* Last line gets gold accent */
+.splash__lines .splash__line:last-child.splash__line--done,
+.splash__lines .splash__line:last-child.splash__line--active {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Blinking cursor */
+.splash__cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--gold);
+  margin-left: 3px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.splash__skip {
+  position: absolute;
+  bottom: 36px;
+  right: 36px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.splash__skip:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 480px) {
+  .splash__lines { gap: 16px; }
+  .splash__skip  { bottom: 24px; right: 24px; }
+}
