@@ -1,36 +1,86 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './SplashScreen.css';
 
-const LINES = [
-  "You don't have to be perfect.",
-  "You just have to start.",
-  "One task at a time.",
+const QUOTE_SETS = [
+  [
+    "You don't have to be perfect.",
+    "You just have to start.",
+    "One task at a time.",
+  ],
+  [
+    "Small steps every day.",
+    "That's how mountains are moved.",
+    "Let's get to work.",
+  ],
+  [
+    "The secret to getting ahead",
+    "is getting started.",
+    "Your list is waiting.",
+  ],
+  [
+    "Don't wait for motivation.",
+    "Build it through action.",
+    "Begin. Right now.",
+  ],
+  [
+    "Great things are done",
+    "by a series of small things",
+    "brought together.",
+  ],
+  [
+    "You've got this.",
+    "One thing at a time.",
+    "Make today count.",
+  ],
+  [
+    "Focus is your superpower.",
+    "Distraction is the enemy.",
+    "Start with one task.",
+  ],
+  [
+    "It always seems impossible",
+    "until it's done.",
+    "So — let's do it.",
+  ],
 ];
+
+function pickRandomSet() {
+  const last = parseInt(localStorage.getItem('lastQuoteIndex') ?? '-1');
+  let idx: number;
+  do {
+    idx = Math.floor(Math.random() * QUOTE_SETS.length);
+  } while (idx === last && QUOTE_SETS.length > 1);
+  localStorage.setItem('lastQuoteIndex', String(idx));
+  return QUOTE_SETS[idx];
+}
 
 interface Props {
   onDone: () => void;
 }
 
 const SplashScreen = ({ onDone }: Props) => {
-  const [lineIndex, setLineIndex]   = useState(0);
-  const [charIndex, setCharIndex]   = useState(0);
-  const [displayed, setDisplayed]   = useState<string[]>(['', '', '']);
-  const [exiting, setExiting]       = useState(false);
+  const lines = useRef(pickRandomSet()).current;
+
+  const [lineIndex, setLineIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [displayed, setDisplayed] = useState<string[]>(() => lines.map(() => ''));
+  const [exiting, setExiting]     = useState(false);
+
+  const exit = () => {
+    setExiting(true);
+    setTimeout(onDone, 700);
+  };
 
   useEffect(() => {
-    if (lineIndex >= LINES.length) {
-      // All lines typed — pause then exit
-      const t = setTimeout(() => {
-        setExiting(true);
-        setTimeout(onDone, 700);
-      }, 1200);
+    if (lineIndex >= lines.length) {
+      const t = setTimeout(exit, 1200);
       return () => clearTimeout(t);
     }
 
-    const currentLine = LINES[lineIndex];
+    const currentLine = lines[lineIndex];
 
     if (charIndex < currentLine.length) {
-      const delay = 38 + Math.random() * 28; // slight randomness = natural feel
+      const delay = 36 + Math.random() * 30;
       const t = setTimeout(() => {
         setDisplayed(prev => {
           const next = [...prev];
@@ -41,33 +91,35 @@ const SplashScreen = ({ onDone }: Props) => {
       }, delay);
       return () => clearTimeout(t);
     } else {
-      // Line done — pause before next line
       const t = setTimeout(() => {
         setLineIndex(i => i + 1);
         setCharIndex(0);
-      }, 500);
+      }, 480);
       return () => clearTimeout(t);
     }
-  }, [lineIndex, charIndex, onDone]);
+  }, [lineIndex, charIndex]);
 
   return (
     <div className={`splash ${exiting ? 'splash--exit' : ''}`}>
       <div className="splash__lines">
-        {LINES.map((_, i) => (
+        {lines.map((_, i) => (
           <p
             key={i}
-            className={`splash__line ${i < lineIndex ? 'splash__line--done' : ''} ${i === lineIndex ? 'splash__line--active' : ''}`}
+            className={[
+              'splash__line',
+              i < lineIndex   ? 'splash__line--done'   : '',
+              i === lineIndex ? 'splash__line--active'  : '',
+              i === lines.length - 1 ? 'splash__line--last' : '',
+            ].join(' ')}
           >
             {displayed[i]}
-            {i === lineIndex && lineIndex < LINES.length && (
+            {i === lineIndex && lineIndex < lines.length && (
               <span className="splash__cursor" />
             )}
           </p>
         ))}
       </div>
-      <p className="splash__skip" onClick={() => { setExiting(true); setTimeout(onDone, 700); }}>
-        skip →
-      </p>
+      <p className="splash__skip" onClick={exit}>skip →</p>
     </div>
   );
 };
